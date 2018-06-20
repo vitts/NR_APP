@@ -1,0 +1,19 @@
+.GuestBook {
+    text-align: center;
+}
+
+.gb-title {
+    font-size: 1.5em;
+    color: #e9edef;
+}
+
+.gb-head{
+    border-bottom: 2px solid #e9edef;
+}
+.gb-title:hover {
+    color: pink;
+    text-transform: uppercase;
+}
+.gb-btn{
+    float:right;
+}
