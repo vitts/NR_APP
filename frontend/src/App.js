@@ -1,26 +1,3 @@
-/*import React, { Component } from 'react';
- import logo from './logo.svg';
- import './App.css';
- 
- class App extends Component {
- render() {
- return (
- <div className="App">
- <header className="App-header">
- <img src={logo} className="App-logo" alt="logo" />
- <h1 className="App-title">Welcome to React</h1>
- </header>
- <p className="App-intro">
- To get started, edit <code>src/App.js</code> and save to reload.
- </p>
- </div>
- );
- }
- }
- 
- export default App;
- */
-
 /**
  *  Just commented above default code. And trying to create new app class with route for GuestBook
  */
@@ -101,63 +78,74 @@ class EnqForm extends React.Component{
     {
         super(props);
         this.state={
-            custname:'Jon Doe',
-            custemail:'jondoe@abc.com'
+            custname:'',
+            custemail:'',
+            mobile:'',
+            comment:''
         };
         
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.onChange = this.onChange.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
+        
+    }
+   
+    onChange = (e) =>{
+        // this code is used to update input type state
+        
+        this.setState({ [e.target.name]: e.target.value });
     }
     
-    // function defination
-    handleChange(event){
-        const target = event.target;
-        const value = target.value;
-        const name = target.name;
+    onSubmit = (e) =>{
+        e.preventDefault();
+        // get form data out of state
+        const {custname,custemail,mobile,comment} = this.state;
         
-        this.setState({
-            [name]:value
+       fetch('/postexp',{
+           method:'POST',
+           body: JSON.stringify({
+               name:custname,
+               email:custemail,
+               mobnum:mobile,
+               comment:comment
+           }),
+           headers: {'Content-Type' : 'application/json'}
+        })
+        .then(response => response.json())
+        .then(json => alert(json.message));
+        
+       
+    }
+        
+    /*postCallApi = async () => {
+        const resp = await fetch('/postexp',{
+           method:'POST',
+           body: JSON.stringify({
+               name:this.state.custname,
+               email:this.state.custemail,
+               mobnum:this.state.mobile,
+               comment:this.state.comment
+           }),
+           headers: {'Content-Type' : 'application/json'}
         });
-    }
-    
-    componentDidMount()
-    {
-        var url = 'http://localhost:4000/api/guestdata';
-        
-        fetch(url,{
-        method: 'POST',
-        body: JSON.stringify({
-         name : this.state.custname
-        }),
-        headers: {"Content-Type": "application/json"}
-  })
-  .then(function(response){
-     console.log(response);
-  }).then(function(body){
-    console.log(body);
-    
-  });
-    }
-   
-   
-    
-    handleSubmit(event)
-    {
-        
-        const formdata = this.state;
 
-        
-    }
+        const rbody = await resp.json();
+
+        if (resp.status !== 200) throw Error(rbody.message);
+
+        return rbody;
+    }*/
+    
     
    render(){
+       const {custname,custemail,mobile,comment} = this.state;
        return(
-           <Form horizontal onSubmit={this.handleSubmit}>
+           <Form horizontal onSubmit={this.onSubmit}>
             <FormGroup controlId='formHorizontalText'>
                 <Col componentClass={ControlLabel} sm={12} md={2}>
                         Name
                 </Col>
                 <Col sm={12} md={10}>
-                    <FormControl type='text' name='custname' placeholder='Enter your name' required='required' value={this.state.custname} onChange={this.handleChange} />
+                    <FormControl type='text' name='custname' placeholder='Enter your name' required='required' value={custname} onChange={this.onChange} />
                 </Col>
             </FormGroup>
             <FormGroup controlId='formControlsText'>
@@ -165,7 +153,23 @@ class EnqForm extends React.Component{
                         Email
                 </Col>
                 <Col sm={12} md={10}>
-                    <FormControl type='email' name='custemail' placeholder='Enter your email' required='required' value={this.state.custemail} onChange={this.handleChange} />
+                    <FormControl type='email' name='custemail' placeholder='Enter your email' required='required' value={custemail} onChange={this.onChange} />
+                </Col>
+            </FormGroup>
+             <FormGroup controlId='formControlsText'>
+                <Col componentClass={ControlLabel} sm={12} md={2}>
+                        Mobile Number
+                </Col>
+                <Col sm={12} md={10}>
+                    <FormControl type='text' name='mobile' placeholder='Enter Mobile number' required='required' value={mobile} onChange={this.onChange} />
+                </Col>
+            </FormGroup>
+            <FormGroup controlId='formControlsText'>
+                <Col componentClass={ControlLabel} sm={12} md={2}>
+                     Message
+                </Col>
+                <Col sm={12} md={10}>
+                    <FormControl componentClass='textarea' name='comment' value={comment} onChange={this.onChange} />
                 </Col>
             </FormGroup>
             <Col sm={10}>
@@ -175,79 +179,6 @@ class EnqForm extends React.Component{
         );
    }
 };
-
-
-
-class EssayForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: 'Please write an essay about your favorite DOM element.'
-    };
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleChange(event) {
-    this.setState({value: event.target.value});
-  }
-
-  handleSubmit(event) {
-    alert('An essay was submitted: ' + this.state.value);
-    event.preventDefault();
-  }
-
-  render() {
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          Essay:
-          <textarea value={this.state.value} onChange={this.handleChange} />
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
-    );
-  }
-}
-
-
-
-const formIntance = (
-        <Form horizontal onSubmit={this.handleSubmit}>
-            <FormGroup controlId='formHorizontalText'>
-                <Col componentClass={ControlLabel} sm={12} md={2}>
-                        Name
-                </Col>
-                <Col sm={12} md={10}>
-                    <FormControl type='text' placeholder='Enter your name' required='required' />
-                </Col>
-            </FormGroup>
-            <FormGroup controlId='formControlsText'>
-                <Col componentClass={ControlLabel} sm={12} md={2}>
-                        Email
-                </Col>
-                <Col sm={12} md={10}>
-                    <FormControl type='email' placeholder='Enter your email' required='required' />
-                </Col>
-            </FormGroup>
-            <FormGroup id='formControlsTextarea'>
-                    <Col componentClass={ControlLabel} sm={12} md={2}>
-                           Message
-                    </Col>
-                <Col sm={12} md={10}>
-                    <FormControl 
-                        componentClass='textarea'
-                        placeholder='Enter your message'
-                        required='required'
-                    />
-                </Col>
-            </FormGroup>
-            <Col sm={10}>
-                <Button bsClass='btn btn-primary gb-btn' type='submit'>Submit</Button>
-            </Col>
-        </Form>
-);
 
 
 export default GuestBook;

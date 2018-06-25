@@ -18,6 +18,11 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 // custom routes 
 var guestData = require('./routes/custdata');
-app.use('/api/guestdata',guestData);
+var postexp = require('./routes/postexp');
+app.use('/testapi',guestData);
+
+// post example
+
+app.use('/postexp',postexp);
 
 module.exports = app;
