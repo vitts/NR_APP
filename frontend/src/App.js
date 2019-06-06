@@ -29,7 +29,7 @@ import React, {Component} from 'react';
 import './Guestbook.css';
 import { Navbar,Nav,NavItem,Grid,Row,Col,Form,FormGroup,ControlLabel,FormControl,Button } from 'react-bootstrap';
 import { BrowserRouter  as Router,Route,Link } from 'react-router-dom';
-import $ from 'jquery';
+//import $ from 'jquery';
 class GuestBook extends Component {
   
     render()
@@ -144,7 +144,7 @@ class EnqForm extends React.Component{
     handleSubmit(event)
     {
         
-        const formdata = this.state;
+       // const formdata = this.state;
 
         
     }
@@ -178,7 +178,7 @@ class EnqForm extends React.Component{
 
 
 
-class EssayForm extends React.Component {
+/*class EssayForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -209,45 +209,10 @@ class EssayForm extends React.Component {
       </form>
     );
   }
-}
+}*/
 
 
 
-const formIntance = (
-        <Form horizontal onSubmit={this.handleSubmit}>
-            <FormGroup controlId='formHorizontalText'>
-                <Col componentClass={ControlLabel} sm={12} md={2}>
-                        Name
-                </Col>
-                <Col sm={12} md={10}>
-                    <FormControl type='text' placeholder='Enter your name' required='required' />
-                </Col>
-            </FormGroup>
-            <FormGroup controlId='formControlsText'>
-                <Col componentClass={ControlLabel} sm={12} md={2}>
-                        Email
-                </Col>
-                <Col sm={12} md={10}>
-                    <FormControl type='email' placeholder='Enter your email' required='required' />
-                </Col>
-            </FormGroup>
-            <FormGroup id='formControlsTextarea'>
-                    <Col componentClass={ControlLabel} sm={12} md={2}>
-                           Message
-                    </Col>
-                <Col sm={12} md={10}>
-                    <FormControl 
-                        componentClass='textarea'
-                        placeholder='Enter your message'
-                        required='required'
-                    />
-                </Col>
-            </FormGroup>
-            <Col sm={10}>
-                <Button bsClass='btn btn-primary gb-btn' type='submit'>Submit</Button>
-            </Col>
-        </Form>
-);
 
 
 export default GuestBook;
